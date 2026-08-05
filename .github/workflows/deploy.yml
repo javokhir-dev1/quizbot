@@ -1,0 +1,33 @@
+name: Deploy to server
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-quizbot
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: 185.191.141.190
+          username: root
+          port: 22
+          key: ${{ secrets.SSH_KEY }}
+          script_stop: true
+          script: |
+            set -e
+            cd /root/quizbot
+            git fetch --all
+            git reset --hard origin/main
+            .venv/bin/pip install -q -r requirements.txt
+            pm2 restart quizbot --update-env
+            pm2 save
+            sleep 3
+            pm2 status

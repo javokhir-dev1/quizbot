@@ -1,4 +1,5 @@
 """Kirish nuqtasi: bot (long polling) + webapp server bitta jarayonda."""
+import os
 import sys
 import threading
 
@@ -19,8 +20,15 @@ def main():
         t.start()
     else:
         print("DIQQAT: .env faylida BOT_TOKEN yo'q — faqat webapp ishlaydi (DEV_MODE uchun)")
-    print(f"WebApp: http://127.0.0.1:{config.PORT}")
-    app.run(host="0.0.0.0", port=config.PORT, threaded=True)
+    host = os.environ.get("HOST", "0.0.0.0")
+    print(f"WebApp: http://{host}:{config.PORT}")
+
+    if config.DEV_MODE:
+        app.run(host=host, port=config.PORT, threaded=True)
+    else:
+        from waitress import serve
+
+        serve(app, host=host, port=config.PORT, threads=8)
 
 
 if __name__ == "__main__":
