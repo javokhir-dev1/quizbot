@@ -62,7 +62,7 @@ def send_welcome(chat_id: int, first_name: str):
         "🤝 <b>Referal</b> — do'stlaringizni taklif qiling, "
         "sirli sovg'alar o'yiniga qatnashing\n"
         "🗳 <b>So'rovnoma</b> — fikringizni bildiring\n\n"
-        "Hammasi ilova ichida 👇"
+        "Omad tilaymiz! 🍀 Hammasi ilova ichida 👇"
     )
     tgapi.send_message(chat_id, text, reply_markup=webapp_keyboard())
 
