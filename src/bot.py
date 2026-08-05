@@ -91,7 +91,7 @@ def handle_start(msg: dict):
     if first_time:
         send_welcome(uid, user.get("first_name", "do'stim"))
     else:
-        tgapi.send_message(uid, "✅ Bot allaqachon faol. Ilovani oching 👇",
+        tgapi.send_message(uid, "✅ Bot faol. Yangi savollar sizni kutmoqda — ilovani oching 👇",
                            reply_markup=webapp_keyboard())
 
 
